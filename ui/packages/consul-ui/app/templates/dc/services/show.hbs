@@ -1,36 +1,39 @@
-{{#let items.firstObject as |item|}}
-{{page-title item.Service.Service}}
-  <DataLoader as |loader|>
+<Route
+  @name={{routeName}}
+as |route|>
+  {{#let items.firstObject as |item|}}
+  {{page-title item.Service.Service}}
+    <DataLoader as |loader|>
 
-    <BlockSlot @name="data">
-      <EventSource @src={{items}} @onerror={{action loader.dispatchError}} />
-      {{#if (not loader.error)}}
-        <EventSource @src={{proxies}} />
-        <EventSource @src={{chain}} />
-      {{/if}}
-    </BlockSlot>
+      <BlockSlot @name="data">
+        <EventSource @src={{items}} @onerror={{action loader.dispatchError}} />
+        {{#if (not loader.error)}}
+          <EventSource @src={{proxies}} />
+          <EventSource @src={{chain}} />
+        {{/if}}
+      </BlockSlot>
 
-    <BlockSlot @name="error">
-      <AppError @error={{loader.error}} />
-    </BlockSlot>
+      <BlockSlot @name="error">
+        <AppError @error={{loader.error}} />
+      </BlockSlot>
 
-    <BlockSlot @name="disconnected" as |Notification|>
-      {{#if (eq loader.error.status "404")}}
-        <Notification @sticky={{true}}>
-          <p data-notification role="alert" class="warning notification-update">
-            <strong>Warning!</strong>
-            This service has been deregistered and no longer exists in the catalog.
-          </p>
-        </Notification>
-      {{else}}
-        <Notification @sticky={{true}}>
-          <p data-notification role="alert" class="warning notification-update">
-            <strong>Warning!</strong>
-            An error was returned whilst loading this data, refresh to try again.
-          </p>
-        </Notification>
-      {{/if}}
-    </BlockSlot>
+      <BlockSlot @name="disconnected" as |Notification|>
+        {{#if (eq loader.error.status "404")}}
+          <Notification @sticky={{true}}>
+            <p data-notification role="alert" class="warning notification-update">
+              <strong>Warning!</strong>
+              This service has been deregistered and no longer exists in the catalog.
+            </p>
+          </Notification>
+        {{else}}
+          <Notification @sticky={{true}}>
+            <p data-notification role="alert" class="warning notification-update">
+              <strong>Warning!</strong>
+              An error was returned whilst loading this data, refresh to try again.
+            </p>
+          </Notification>
+        {{/if}}
+      </BlockSlot>
 
     <BlockSlot @name="loaded">
       <AppView>
@@ -80,28 +83,29 @@
                 )
           }}/>
         {{/if}}
-        </BlockSlot>
-        <BlockSlot @name="actions">
-          {{#if urls.service}}
-            <a href={{render-template urls.service (hash
-              Datacenter=dc.Name
-              Service=(hash Name=item.Service.Service)
-            )}}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-test-dashboard-anchor>
-              Open Dashboard
-            </a>
-          {{/if}}
-        </BlockSlot>
-        <BlockSlot @name="content">
-          <Outlet
-            @name={{routeName}}
-          as |o|>
-            {{outlet}}
-          </Outlet>
-        </BlockSlot>
-      </AppView>
-    </BlockSlot>
-  </DataLoader>
-{{/let}}
+      </BlockSlot>
+          <BlockSlot @name="actions">
+            {{#if urls.service}}
+              <a href={{render-template urls.service (hash
+                Datacenter=dc.Name
+                Service=(hash Name=item.Service.Service)
+              )}}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-test-dashboard-anchor>
+                Open Dashboard
+              </a>
+            {{/if}}
+          </BlockSlot>
+          <BlockSlot @name="content">
+            <Outlet
+              @name={{routeName}}
+            as |o|>
+              {{outlet}}
+            </Outlet>
+          </BlockSlot>
+        </AppView>
+      </BlockSlot>
+    </DataLoader>
+  {{/let}}
+</Route>
