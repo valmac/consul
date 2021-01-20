@@ -5,9 +5,11 @@ import (
 
 	envoycore "github.com/envoyproxy/go-control-plane/envoy/api/v2/core"
 	envoytype "github.com/envoyproxy/go-control-plane/envoy/type"
-	"github.com/hashicorp/consul/sdk/testutil"
+
 	"github.com/hashicorp/go-version"
 	"github.com/stretchr/testify/require"
+
+	"github.com/hashicorp/consul/sdk/testutil"
 )
 
 func TestDetermineEnvoyVersionFromNode(t *testing.T) {
@@ -18,12 +20,6 @@ func TestDetermineEnvoyVersionFromNode(t *testing.T) {
 		"empty": {
 			node:   &envoycore.Node{},
 			expect: nil,
-		},
-		"only build version": {
-			node: &envoycore.Node{
-				BuildVersion: "1580db37e9a97c37e410bad0e1507ae1a0fd9e77/1.9.0/Clean/RELEASE/BoringSSL",
-			},
-			expect: version.Must(version.NewVersion("1.9.0")),
 		},
 		"user agent build version but no user agent": {
 			node: &envoycore.Node{
