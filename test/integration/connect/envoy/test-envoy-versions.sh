@@ -12,12 +12,14 @@ cd "$(dirname "$0")"
 ## does not exist in docker
     # 1.13.5
     # 1.14.0
+
+## doesn't fully support the renamed filters
+    # 1.13.1
+    # 1.13.2
+    # 1.13.3
+    # 1.13.4
+    # 1.13.6
 versions=(
-    1.13.1
-    1.13.2
-    1.13.3
-    1.13.4
-    1.13.6
     1.14.1
     1.14.2
     1.14.3
