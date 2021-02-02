@@ -3005,7 +3005,7 @@ func updateMeshTopology(tx WriteTxn, idx uint64, node string, svc *structs.NodeS
 	oldUpstreams := make(map[structs.ServiceName]bool)
 	if e, ok := existing.(*structs.ServiceNode); ok {
 		for _, u := range e.ServiceProxy.Upstreams {
-			upstreamMeta := structs.EnterpriseMetaInitializer(u.DestinationNamespace)
+			upstreamMeta := structs.NewEnterpriseMeta(u.DestinationNamespace)
 			sn := structs.NewServiceName(u.DestinationName, &upstreamMeta)
 
 			oldUpstreams[sn] = true
@@ -3021,7 +3021,7 @@ func updateMeshTopology(tx WriteTxn, idx uint64, node string, svc *structs.NodeS
 		}
 
 		// TODO (freddy): Account for upstream datacenter
-		upstreamMeta := structs.EnterpriseMetaInitializer(u.DestinationNamespace)
+		upstreamMeta := structs.NewEnterpriseMeta(u.DestinationNamespace)
 		upstream := structs.NewServiceName(u.DestinationName, &upstreamMeta)
 
 		obj, err := tx.First(topologyTableName, "id", upstream, downstream)
