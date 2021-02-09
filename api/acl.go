@@ -298,7 +298,6 @@ func (m *ACLAuthMethodListEntry) MarshalJSON() ([]byte, error) {
 	if m.MaxTokenTTL == 0 {
 		exported.MaxTokenTTL = ""
 	}
-	fmt.Printf("ACLAuthMethodListEntry marshal data %v\n", m)
 
 	return json.Marshal(exported)
 }
@@ -312,7 +311,6 @@ func (m *ACLAuthMethodListEntry) UnmarshalJSON(data []byte) error {
 	}{
 		Alias: (*Alias)(m),
 	}
-	fmt.Printf("ACLAuthMethodListEntry unmarshal data %q\n", data)
 
 	if err := json.Unmarshal(data, &aux); err != nil {
 		return err

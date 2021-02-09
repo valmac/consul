@@ -1133,7 +1133,6 @@ func (m *ACLAuthMethodListStub) MarshalJSON() ([]byte, error) {
 	}
 
 	data, err := json.Marshal(exported)
-	fmt.Println("ACLAuthMethodListStub marshal data %q\n", string(data))
 
 	return data, err
 }

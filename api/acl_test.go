@@ -1,7 +1,6 @@
 package api
 
 import (
-	"fmt"
 	"strings"
 	"testing"
 	"time"
@@ -679,8 +678,6 @@ func TestAPI_AuthMethod_List(t *testing.T) {
 
 	created1, wm, err := acl.AuthMethodCreate(&method1, nil)
 
-	fmt.Printf("Create %#v -> %#v ::: %#v ::: #%v\n\n", method1, created1, wm, err)
-
 	require.NoError(t, err)
 	require.NotNil(t, created1)
 	require.NotEqual(t, "", created1.Name)
@@ -695,18 +692,10 @@ func TestAPI_AuthMethod_List(t *testing.T) {
 		Config:        AuthMethodCreateKubernetesConfigHelper(),
 	}
 
-	created2, wm, err := acl.AuthMethodCreate(&method2, nil)
-	fmt.Printf("Create %#v -> %#v ::: %#v ::: #%v\n\n", method2, created2, wm, err)
-
+	_, _, err = acl.AuthMethodCreate(&method2, nil)
 	require.NoError(t, err)
 
-	//
-	entry, _, err := acl.AuthMethodRead("test_1", nil)
-	fmt.Printf("Entry %#v\n", entry)
-
 	entries, _, err := acl.AuthMethodList(nil)
-	fmt.Printf("List %#v\n", entries)
-
 	require.NoError(t, err)
 	require.NotNil(t, entries)
 	require.Equal(t, 2, len(entries))
@@ -755,11 +744,6 @@ SxTJANJHqf4BiFtVjN7LZXi3HUIRAsceEbd0TfW5be9SQ0tbDyyGYt/bXtBLGTIh
 9kerr9eWDHlpHMTyP01+Ua3EacbfgrmvD9sa3s6gC4SnwlvLdubmyLwoorCs77eF
 15bSOU7NsVZfwLw+M+DyNWPxI1BR/XOP+YoyTgIEChIC9eYnmlWU2Q==
 -----END CERTIFICATE-----`
-
-	//block, _ := pem.Decode([]byte(pemData)) // []byte(pemData)
-	//fmt.Printf("Got1 %#v\n", block)
-	//cert, err := x509.ParseCertificate(block.Bytes)
-	//fmt.Printf("Got2 %#v %#v\n", cert, err)
 
 	result = map[string]interface{}{
 		"Host":              "https://192.0.2.42:8443",
