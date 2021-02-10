@@ -213,9 +213,10 @@ providers are added this documentation will list any that this section applies
 to.
 
 ### Recovering From Expired Certificates
-If the CA provider is misconfigured or unavailable, Consul service mesh requests eventually
-stop working due to expiration of intermediate and root certificates. To recover manually, use the
+If the built-in CA provider is misconfigured or unavailable, Consul service mesh requests eventually
+stop functioning due to expiration of intermediate and root certificates. To recover manually, use the
 [CLI helper](/commands/tls/ca#consul-tls-ca-create) to generate CA certificates.
+
 
 #### Example - Regenerating the built in CA
 ```shell-session
